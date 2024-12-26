@@ -150,7 +150,6 @@ class Dao
             $this->closeConnection();
 
             if($success){
-                echo "Registro inserido com sucesso!\n";
                 return true;
             }
             return false;   
