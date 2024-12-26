@@ -7,3 +7,5 @@ CREATE TABLE api_logs (
     request_method VARCHAR(10) NOT NULL,
     response_status INT NOT NULL
 );
+
+ALTER TABLE api_logs ADD COLUMN ip_address VARCHAR(45) NOT NULL;
