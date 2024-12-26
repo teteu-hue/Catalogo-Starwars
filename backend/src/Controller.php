@@ -12,8 +12,10 @@ class Controller
         include "Views/$view.php";
     }
 
-    protected function sendResponse($data)
+    protected function sendResponse($data, $statusCode = 200)
     {
-        return json_encode($data, true);
+        header('Content-Type: application/json');
+        http_response_code($statusCode);
+        echo json_encode($data);
     }
 }
