@@ -1,5 +1,10 @@
 # Catalogo Starwars
 
+Rodar o projeto
+```bash
+php -S localhost:8081 -t public
+```
+
 ## Descricao
 
 Utilizando a api do Star Wars como fonte de informação, construa uma tela web com um catálogo, contendo todos os filmes, ordenados por data de lançamento, exibindo nome e data de lançamento de cada um.
