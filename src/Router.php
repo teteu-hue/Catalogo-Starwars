@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Logs;
 use Exception;
 
 class Router
@@ -41,6 +42,7 @@ class Router
     {
         $uri = strtok($_SERVER['REQUEST_URI'], '?');
         $method = $_SERVER['REQUEST_METHOD'];
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
 
         if(array_key_exists($uri, $this->routes[$method])){
             $controller = $this->routes[$method][$uri]['controller'];
@@ -57,9 +59,31 @@ class Router
                 echo 'Error: ' . $e->getMessage();
             }
 
-            
+            $logs = [
+                "request_time" => $requestTime,
+                "endpoint" => $uri,
+                "request_method" => $method,
+                "response_status" => $responseStatus,
+                "ip_address" => $ipAddress
+            ];
+
+            (new Logs)->registerLog($logs);
+
+            http_response_code($responseStatus);
 
         } else {
+            $requestTime = date('Y-m-d H:i:s');
+            $responseStatus = 404;
+            $logs = [
+                "request_time" => $requestTime,
+                "endpoint" => $uri,
+                "request_method" => $method,
+                "response_status" => $responseStatus,
+                "ip_address" => $ipAddress
+            ];
+
+            (new Logs)->registerLog($logs);
+            http_response_code($responseStatus);
             throw new Exception("No route found for URI: $uri");
         }
     }
