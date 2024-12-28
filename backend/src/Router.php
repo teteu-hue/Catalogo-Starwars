@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Models\Logs;
+use App\Models\RequestApiLogs;
 use Exception;
 
 class Router
@@ -67,7 +67,7 @@ class Router
                 "ip_address" => $ipAddress
             ];
 
-            (new Logs)->registerLog($logs);
+            (new RequestApiLogs)->registerLog($logs);
 
             http_response_code($responseStatus);
 
@@ -82,7 +82,7 @@ class Router
                 "ip_address" => $ipAddress
             ];
 
-            (new Logs)->registerLog($logs);
+            (new RequestApiLogs)->registerLog($logs);
             http_response_code($responseStatus);
             throw new Exception("No route found for URI: $uri");
         }
