@@ -22,17 +22,14 @@ CREATE TABLE movies (
 
 CREATE TABLE characters (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    film_id INT,
-    name VARCHAR(255),
-    url VARCHAR(255),
-    FOREIGN KEY (film_id) REFERENCES films(id) ON DELETE CASCADE
+    name VARCHAR(255)
 );
 
-CREATE TABLE filmes_personagens (
-    film_id INT,
-    character_id INT,
-    PRIMARY KEY (film_id, character_id),
-    FOREIGN KEY (film_id) REFERENCES filmes(id) ON DELETE CASCADE,
-    FOREIGN KEY (character_id) REFERENCES personagens(id) ON DELETE CASCADE
+CREATE TABLE characters_movies (
+    id_movie INT,
+    id_character INT,
+    PRIMARY KEY (id_movie, id_character),
+    FOREIGN KEY (id_movie) REFERENCES movies(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_character) REFERENCES characters(id) ON DELETE CASCADE
 );
 
