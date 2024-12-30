@@ -1,15 +1,15 @@
 <style>
-    .c-loader{
+    .c-loader {
         border: 6px solid #e5e5e5;
-        border-top-color: #51d4db; 
-        height: 50px; 
-        width: 50px; 
-        animation: is-rotating 1s infinite; 
-        border-radius:50%;
+        border-top-color: #51d4db;
+        height: 50px;
+        width: 50px;
+        animation: is-rotating 1s infinite;
+        border-radius: 50%;
     }
 
-    @keyframes is-rotating{
-        to{
+    @keyframes is-rotating {
+        to {
             transform: rotate(1turn);
         }
     }
@@ -18,6 +18,43 @@
 <main id="movies-container" class="w-auto h-auto d-flex align-items-center flex-wrap m-5">
 </main>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h1 class="modal-episode fs-5 p-2" id="exampleModalLabel"><span id="title-movie"></span></h1>
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>
+                        <strong>Título:</strong> <span id="movie-title"></span>
+                    </li>
+                    <li>
+                        <strong>Data de lancamento:</strong> <span id="movie-date"></span>
+                    </li>
+                    <li>
+                        <strong>Número do Episódio:</strong> <span id="movie-episode"></span>
+                    </li>
+                    <li>
+                        <strong>Diretor:</strong> <span id="movie-director"></span>
+                    </li>
+                    <li>
+                        <strong>Produtores:</strong> <span id="movie-producer"></span>
+                    </li>
+                    <li>
+                        <strong>Sinopse:</strong> <span id="movie-opening"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar detalhes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 
 <script>
     $(document).ready(function() {
@@ -25,18 +62,22 @@
             url: 'http://localhost:8081/movies',
             method: 'GET',
             dataType: 'json',
-            error: function (response){
+            error: function(response) {
                 const loading = `<div class="c-loader m-auto mt-5 justify-content-center"></div>`;
-                const h2 = `<h2 class="text-center text-white mt-5 pt-5">Estamos carregando os filmes do catalogo</h2>`;
+                const loadingText = `<h2 class="text-center text-white mt-5 pt-5">Estamos carregando os filmes do catalogo</h2>`;
 
                 $("#movies-container").before(loading);
-                $(".c-loader").after(h2);
+                $(".c-loader").after(loadingText);
             },
             success: function(response) {
                 response.forEach((movie) => {
                     const {
                         title,
-                        opening_crawl
+                        opening_crawl,
+                        episode_id,
+                        producer,
+                        director,
+                        release_date
                     } = movie;
                     const card = `
                 <div class="card m-5" style="width: 20rem;">
@@ -45,24 +86,17 @@
                         <p class="card-text text-white">
                             ${opening_crawl}
                         </p>
-                        <a href="#" id="details-button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary text-white">Detalhes...</a>
-                    </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            <h1 class="modal-title fs-5 p-2" id="exampleModalLabel">${title}</h1>
-                            <div class="modal-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                        </div>
-                    <div class="modal-body">
-                      ...
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-                    </div>
+                        <a href="#" 
+                            id="details-button"
+                            data-title="${title}"
+                            data-opening="${opening_crawl}"
+                            data-episode="${episode_id}"
+                            data-producer="${producer}"
+                            data-director="${director}"
+                            data-date="${release_date}"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#exampleModal" 
+                            class="btn btn-primary text-white">Detalhes...</a>
                     </div>
                 </div>`;
                     $('#movies-container').append(card);
@@ -70,9 +104,23 @@
             }
         });
 
-        $('#details-button').click(function() {
-            const title = $(this).data;
-            console.log(title);
+        $(document).on('click', '#details-button', function() {
+            const title = $(this).data('title');
+            const opening = $(this).data('opening');
+            const episode = $(this).data('episode');
+            const producer = $(this).data('producer');
+            const director = $(this).data('director');
+            const date = $(this).data('date');
+
+            const formattedDate = moment(date).format("DD [de] MMMM [de] YYYY");
+
+            $("#title-movie").text(title);
+            $("#movie-title").text(title);
+            $("#movie-date").text(formattedDate);
+            $("#movie-opening").text(opening);
+            $("#movie-episode").text(episode);
+            $("#movie-producer").text(producer);
+            $("#movie-director").text(director);
         });
     });
 </script>
