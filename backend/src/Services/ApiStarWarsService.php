@@ -31,16 +31,27 @@ class ApiStarWarsService
         return $response;  
     }
 
-    public static function getCharacters($url)
+    public static function getPaginate($url, $page = null)
     {
         $curl = curl_init();
-        $options = [
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 500,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_FOLLOWLOCATION => true
-        ];
+        if($page == null){
+            $options = [
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 500,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_FOLLOWLOCATION => true
+            ];
+        } else {
+            $options = [
+                CURLOPT_URL => $url . "?page=$page",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 500,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_FOLLOWLOCATION => true
+            ];
+        }
+        
 
         curl_setopt_array($curl, $options);
 
@@ -52,8 +63,6 @@ class ApiStarWarsService
             throw new Error("Erro na API ". curl_error($curl));
         }
 
-        $data = ApiStarWarsResource::mountCharacterResponse($response);
-
-        return json_decode($data, true);
+        return $response;
     }
 }
