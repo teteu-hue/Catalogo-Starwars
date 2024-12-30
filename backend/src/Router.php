@@ -38,6 +38,11 @@ class Router
         $this->addRoute($route, $controller, $action, "DELETE");
     }
 
+    private function controllerExists($controller, $action)
+    {
+        return !method_exists($controller, $action);
+    }
+
     public function dispatch()
     {
         $uri = strtok($_SERVER['REQUEST_URI'], '?');
@@ -47,6 +52,10 @@ class Router
         if(array_key_exists($uri, $this->routes[$method])){
             $controller = $this->routes[$method][$uri]['controller'];
             $action = $this->routes[$method][$uri]['action'];
+            
+            if($this->controllerExists($controller, $action)){
+                echo "O $controller::$action nao existe";
+            }            
 
             $requestTime = date('Y-m-d H:i:s');
             $responseStatus = 200;
