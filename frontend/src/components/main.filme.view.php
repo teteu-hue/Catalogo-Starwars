@@ -1,6 +1,23 @@
-<main id="movies-container" class="w-auto h-auto d-flex align-items-center flex-wrap m-5">
+<style>
+    .c-loader{
+        border: 6px solid #e5e5e5;
+        border-top-color: #51d4db; 
+        height: 50px; 
+        width: 50px; 
+        animation: is-rotating 1s infinite; 
+        border-radius:50%;
+    }
 
+    @keyframes is-rotating{
+        to{
+            transform: rotate(1turn);
+        }
+    }
+</style>
+<h1 class="text-center mt-5 pt-5 text-white">Catalogo de Filmes</h1>
+<main id="movies-container" class="w-auto h-auto d-flex align-items-center flex-wrap m-5">
 </main>
+
 
 <script>
     $(document).ready(function() {
@@ -8,13 +25,19 @@
             url: 'http://localhost:8081/movies',
             method: 'GET',
             dataType: 'json',
+            error: function (response){
+                const loading = `<div class="c-loader m-auto mt-5 justify-content-center"></div>`;
+                const h2 = `<h2 class="text-center text-white mt-5 pt-5">Estamos carregando os filmes do catalogo</h2>`;
+
+                $("#movies-container").before(loading);
+                $(".c-loader").after(h2);
+            },
             success: function(response) {
                 response.forEach((movie) => {
                     const {
                         title,
                         opening_crawl
                     } = movie;
-                    console.log(movie);
                     const card = `
                 <div class="card m-5" style="width: 20rem;">
                     <div class="card-body bg-danger">

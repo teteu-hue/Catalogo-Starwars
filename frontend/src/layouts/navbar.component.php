@@ -1,5 +1,5 @@
 <nav class="navbar bg-black navbar-expand-lg">
-    <a class="navbar-brand text-white ms-auto" href="./home.view.php">Catalogo de Filmes</a>
+    <a class="navbar-brand text-white ms-auto" href="./home.view.php">Starwars</a>
     <div class="container-fluid w-auto d-flex">
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
