@@ -31,7 +31,8 @@ class ApiStarWarsResource
             $body[$i]['producer'] = $response['results'][$i]['producer'];
             $body[$i]['release_date'] = $response['results'][$i]['release_date'];
 
-            Movies
+            // Buscar um jeito de automatizar essa criacao dos resultados no banco de dados da aplicacao.
+            //(new Movies)->create($body[$i]);
         }
 
         return json_encode($body);

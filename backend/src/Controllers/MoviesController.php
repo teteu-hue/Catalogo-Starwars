@@ -9,6 +9,6 @@ class MoviesController extends Controller
 {
     public function index()
     {
-        return $this->sendResponse(ApiStarWars::get("https://swapi.py4e.com/api/films"), 200);
+        return $this->sendResponse(ApiStarWars::getMovies("https://swapi.py4e.com/api/films"), 200);
     }
 }

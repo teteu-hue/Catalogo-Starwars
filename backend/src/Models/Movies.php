@@ -17,14 +17,15 @@ class Movies extends Dao
     public function create($data)
     {
         $sql = "INSERT INTO movies(title, episode_id, opening_crawl, release_date, director, producers)
-                VALUES (:title, :episode_id, :opening_crawl, :release_date, :director, :producers)";
+                VALUES (:title, :episode_id, :opening_crawl, :release_date, :director, :producer)";
 
         $body = [
             ":title" => $data['title'],
             ":episode_id" => $data['episode_id'],
-            ":opening_crawl" => $data[':opening_crawl'],
+            ":opening_crawl" => $data['opening_crawl'],
+            ":release_date" => $data['release_date'],
             ":director" => $data['director'],
-            ":producers" => $data['producers']
+            ":producer" => $data['producer']
         ];
 
         $this->insertQuery($sql, $body);
