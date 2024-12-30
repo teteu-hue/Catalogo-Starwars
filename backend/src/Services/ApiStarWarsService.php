@@ -5,9 +5,9 @@ namespace App\Services;
 use App\Resource\ApiStarWarsResource;
 use Error;
 
-class ApiStarWars
+class ApiStarWarsService
 {
-    public static function getMovies($url)
+    public static function get($url)
     {
         $curl = curl_init();
         $options = [
@@ -28,9 +28,7 @@ class ApiStarWars
             throw new Error("Erro na API ". curl_error($curl));
         }
 
-        $data = ApiStarWarsResource::formatResponse($response);
-
-        return json_decode($data, true);
+        return $response;  
     }
 
     public static function getCharacters($url)
