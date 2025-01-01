@@ -32,4 +32,3 @@ CREATE TABLE characters_movies (
     FOREIGN KEY (id_movie) REFERENCES movies(id) ON DELETE CASCADE,
     FOREIGN KEY (id_character) REFERENCES characters(id) ON DELETE CASCADE
 );
-

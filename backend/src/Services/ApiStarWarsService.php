@@ -63,6 +63,6 @@ class ApiStarWarsService
             throw new Error("Erro na API ". curl_error($curl));
         }
 
-        return $response;
+        return json_decode($response, true);
     }
 }

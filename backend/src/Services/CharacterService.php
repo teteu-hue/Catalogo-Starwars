@@ -2,15 +2,33 @@
 
 namespace App\Services;
 
+use App\Models\Character;
+
 class CharacterService
 {
-    public static function get($page = null)
+    public static function get($page = false)
     {       
-        if($page == null){
+        if(!$page){
             $response = ApiStarWarsService::getPaginate(BASE_URL . "people");
         } else {
-            $response = ApiStarWarsService::getPaginate( BASE_URL . "people", $page);
+            $currentPage = 1;
+            $hasMorePages = true;
+            $body = [];
+            while($hasMorePages){
+                $response = ApiStarWarsService::getPaginate(BASE_URL . "people", $currentPage);
+                
+                foreach($response['results'] as $character){
+                    $body[] = [
+                        'name' => $character['name']
+                    ];
+
+                    //(new Character)->create(['name' => $character['name']]);
+                }
+                $currentPage++;
+                $hasMorePages = !empty($response['next']);
+            }
+
         }
-        return json_decode($response, true);
+        return $body;
     }    
 }
