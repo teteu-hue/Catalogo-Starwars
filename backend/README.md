@@ -1,7 +1,7 @@
 # Catalogo Starwars
 
 ## Diagramas e Fluxogramas
-[Link to excalidraw](https://excalidraw.com/#room=7467338f775316b1f4c4,WP3A_TXNdSkw-dIMbXLSuw)
+[Acesse os diagramas e fluxogramas da aplicação](https://excalidraw.com/#room=7467338f775316b1f4c4,WP3A_TXNdSkw-dIMbXLSuw)
 
 ## Rodar o projeto
 ```bash
