@@ -62,14 +62,25 @@
             url: 'http://localhost:8081/movies',
             method: 'GET',
             dataType: 'json',
-            error: function(response) {
+            beforeSend: function(){
                 const loading = `<div class="c-loader m-auto mt-5 justify-content-center"></div>`;
-                const loadingText = `<h2 class="text-center text-white mt-5 pt-5">Estamos carregando os filmes do catalogo</h2>`;
+                const loadingText = `<h2 id="text-loader" class="text-center text-white mt-5 pt-5">Estamos carregando os filmes do catalogo</h2>`;
 
                 $("#movies-container").before(loading);
                 $(".c-loader").after(loadingText);
             },
+            error: function(response) {
+                const loading = `<div class="c-loader m-auto mt-5 justify-content-center"></div>`;
+                const loadingText = `<h2 id="text-loader" class="text-center text-white mt-5 pt-5">Estamos carregando os filmes do catalogo</h2>`;
+
+                $("#movies-container").before(loading);
+                $(".c-loader").append(loadingText);
+            },
             success: function(response) {
+
+                $('#text-loader').remove();
+                $('.c-loader').hide();
+
                 response.forEach((movie) => {
                     const {
                         title,
