@@ -43,6 +43,9 @@
                         <strong>Produtores:</strong> <span id="movie-producer"></span>
                     </li>
                     <li>
+                        <strong>Personagens</strong> <span id="movie-character"></span>
+                    </li>
+                    <li>
                         <strong>Sinopse:</strong> <span id="movie-opening"></span>
                     </li>
                 </ul>
@@ -88,8 +91,14 @@
                         episode_id,
                         producer,
                         director,
-                        release_date
+                        release_date,
+                        characters
                     } = movie;
+
+                    const characterList = characters
+                    .map(charName => "<a href='#' class='text-decoration-none'>" + charName + "</a>")
+                    .join(", ");
+
                     const card = `
                 <div class="card m-5" style="width: 20rem;">
                     <div class="card-body bg-danger">
@@ -105,6 +114,7 @@
                             data-producer="${producer}"
                             data-director="${director}"
                             data-date="${release_date}"
+                            data-character="${characterList}"
                             data-bs-toggle="modal" 
                             data-bs-target="#exampleModal" 
                             class="btn btn-primary text-white">Detalhes...</a>
@@ -122,6 +132,7 @@
             const producer = $(this).data('producer');
             const director = $(this).data('director');
             const date = $(this).data('date');
+            const character = $(this).data('character');
 
             const formattedDate = moment(date).format("DD [de] MMMM [de] YYYY");
 
@@ -132,6 +143,7 @@
             $("#movie-episode").text(episode);
             $("#movie-producer").text(producer);
             $("#movie-director").text(director);
+            $("#movie-character").html(character);
         });
     });
 </script>
