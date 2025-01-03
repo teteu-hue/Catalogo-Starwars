@@ -3,16 +3,16 @@
 namespace App\Resource;
 
 use App\Models\Movies;
+use App\Services\ApiStarwarsService;
+use App\Services\CharacterService;
 
 class ApiStarWarsResource
 {
-    
+
     private static function mountMovieResponse($data)
     {
         $response = json_decode($data, true);
         $body = [];
-
-        
 
         for($i = 0; $i < count($response['results']); $i++){
             $body[$i]['title'] = $response['results'][$i]['title'];
@@ -23,8 +23,8 @@ class ApiStarWarsResource
             $body[$i]['release_date'] = $response['results'][$i]['release_date'];
             $body[$i]['characters'] = [];
 
-            foreach($response['results'][$i]['characters'] as $characters){
-                $body[$i]['characters'][] = basename($characters);
+            foreach($response['results'][$i]['characters'] as $character){
+                $body[$i]['characters'][] = json_decode(ApiStarwarsService::get($character), true)['name'];
             }
 
             // Buscar um jeito de automatizar essa criacao dos resultados no banco de dados da aplicacao.

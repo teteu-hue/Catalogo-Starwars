@@ -6,10 +6,9 @@ use App\Models\Character;
 
 class CharacterService
 {
-    public static function get()
+    public static function get($data)
     {       
-       
-            
+                   
       
     }    
 }
