@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Resource\ApiStarWarsResource;
 use Error;
 
-class ApiStarWarsService
+class ApiStarwarsMoviesService
 {
     public static function get($url)
     {
