@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Resource\ApiStarWarsResource;
 use Error;
 
 class ApiStarwarsService
