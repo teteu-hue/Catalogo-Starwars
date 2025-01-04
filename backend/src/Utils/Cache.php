@@ -2,12 +2,24 @@
 
 namespace App\Utils;
 
+use Error;
+use Exception;
+
 class Cache
 {
     private static $cacheExpiration = 3600;
     private static $basePath = __DIR__ . '/cache/';
 
-    private static function getCacheFilename($endpoint, $params = [])
+    /**
+     * Gera o caminho do arquivo  de cache com base no endpoint e parâmetros.
+     * Se o diretório de cache não existir, ele será criado automaticamente.
+     * 
+     * @param string $endpoint (ex: '/moveis' ou '/characters')
+     * @param array $params[]
+     * 
+     * @return string caminho de cache gerado Utils/cache
+     */
+    private static function getCachePathname($endpoint, $params = [])
     {
         
         // Caso o diretorio nao existe, cria dinamicamente.
@@ -19,49 +31,80 @@ class Cache
         return self::$basePath . $key .  '.json';
     }
 
+    /**
+     * se o arquivo de cache existir e não estiver expirado retorna os filmes do cache.
+     * 
+     * @param string $endpoint = '/movies' || '/characters'
+     * @param array $params[]
+     * 
+     * @return json | null
+     */
     public static function getFromCache($endpoint, $params = [])
     {
-        $filename = self::getCacheFilename($endpoint, $params);
+        $pathName = self::getCachePathname($endpoint, $params);
 
-        if(file_exists($filename)){
-            $cacheTime = filemtime($filename);
+        if(file_exists($pathName)){
+            $cacheTime = filemtime($pathName);
             $currentTime = time();
 
             if(($currentTime - $cacheTime) < self::$cacheExpiration){
-                return json_decode(file_get_contents($filename), true);
+                return json_decode(file_get_contents($pathName), true);
             }
         }
         return null;
     }
 
+    /**
+     * salva os dados no cache.
+     * 
+     * @param array $data -> dados que serão salvos no cache
+     * @param string $endpoint
+     * @param array $params
+     * 
+     */
     public static function saveToCache($endpoint, $data, $params = [])
     {
-        $filename = self::getCacheFilename($endpoint, $params);
-        error_log("Tentando salvar no caminho: $filename");
-
-        if(file_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT)) == false){
-            throw new \Exception("Failed to write cache file: " . $filename);
+        $pathName = self::getCachePathname($endpoint, $params);
+        
+        if(file_put_contents($pathName, json_encode($data, JSON_PRETTY_PRINT)) == false){
+            throw new \Exception("Failed to write cache file: " . $pathName);
         }
+        error_log("Cache criado com sucesso!");
+        error_log("Path: $pathName");
     }
+
+    /**
+     * @param string $endpoint
+     * @param array $params
+     * 
+     * @return void;
+     */
 
     public static function clearCache($endpoint, $params = [])
     {
-        $filename = self::getCacheFilename($endpoint, $params);
+        $pathName = self::getCachePathname($endpoint, $params);
 
-        if(file_exists($filename)){
-            unlink($filename);
+        if(file_exists($pathName)){
+            unlink($pathName);
         }
     }
+
+    /**
+     * Limpa todos os arquivos de cache dentro de Utils
+     * 
+     * @return void;
+     */
 
     public static function clearAllCache()
     {
         $files = glob(self::$basePath, '*.json');
+
+        if(!$files){
+            echo "Não foram encontrados arquivos de cache";
+        }
 
         foreach($files as $file){
             unlink($file);
         }
     }
 }
-
-$testFile = '/tmp/test_cache.txt';
-file_put_contents($testFile, 'Test data');
