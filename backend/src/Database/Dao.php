@@ -8,6 +8,15 @@ use PDOException;
 
 class Dao
 {
+    /**
+     * Classe responsável pela conexão e manipulação do banco de dados da aplicação.
+     * 
+     * @param PDO $connection -> responsável por comandos de conexão (Ex: $connection->query(), $connection->exec())
+     * @param array $options -> array de opções para conexão no banco (Ex: FETCH_ASSOC)
+     * @param string $dsn -> contém a string de conexão
+     * @param string $file -> nome do arquivo .ini de configuração
+     * 
+     */
     protected $connection;
     private $options = [];
     private string $dsn;
@@ -66,6 +75,9 @@ class Dao
         return $this->options;
     }
 
+    /**
+     * Método responsável por conectar com o banco de dados
+     */
     private function setConnection()
     {
         try {
@@ -96,6 +108,11 @@ class Dao
         $this->connection = null;
     }
     
+    /**
+     * Utilizado para validar querys, se existem resultados ou não.
+     * 
+     * @param PDOStatement $result -> retorno dos métodos de manipulação do banco de dados.
+     */
     private function validateQuery($result)
     {   
         if($result->rowCount() < 0){
@@ -108,7 +125,12 @@ class Dao
         return $result->fetchAll();
     }
 
-    // SELECT QUERYS
+    /**
+     * método responsável por realizar queries select
+     * 
+     * @param string $query -> querie a ser executada
+     * @param array $params -> parâmetros que serão executados na querie
+     */
     protected function selectQuery($query, $params = null)
     {
         try {
