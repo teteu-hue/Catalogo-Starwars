@@ -34,6 +34,11 @@
                         <strong>Data de lancamento:</strong> <span id="movie-date"></span>
                     </li>
                     <li>
+                        <strong>Idade do filme em anos:</strong> <span id="movie-years"></span>
+                        <br><strong>Idade do filme em meses:</strong> <span id="movie-months"></span>
+                        <br><strong>Idade do filme em dias:</strong> <span id="movie-days"></span>
+                    </li>
+                    <li>
                         <strong>Número do Episódio:</strong> <span id="movie-episode"></span>
                     </li>
                     <li>
@@ -92,12 +97,14 @@
                         producer,
                         director,
                         release_date,
-                        characters
+                        characters,
+                        film_age
                     } = movie;
 
                     const characterList = characters
                     .map(charName => "<a href='#' class='text-decoration-none'>" + charName + "</a>")
                     .join(", ");
+                   
 
                     const card = `
                 <div class="card m-5" style="width: 20rem;">
@@ -114,6 +121,9 @@
                             data-producer="${producer}"
                             data-director="${director}"
                             data-date="${release_date}"
+                            data-years="${film_age.anos}"
+                            data-months="${film_age.meses}"
+                            data-days="${film_age.dias}"
                             data-character="${characterList}"
                             data-bs-toggle="modal" 
                             data-bs-target="#exampleModal" 
@@ -133,6 +143,9 @@
             const director = $(this).data('director');
             const date = $(this).data('date');
             const character = $(this).data('character');
+            const years = $(this).data('years');
+            const months = $(this).data('months');
+            const days = $(this).data('days');
 
             const formattedDate = moment(date).format("DD [de] MMMM [de] YYYY");
 
@@ -144,6 +157,9 @@
             $("#movie-producer").text(producer);
             $("#movie-director").text(director);
             $("#movie-character").html(character);
+            $("#movie-years").text(years);
+            $("#movie-months").text(months);
+            $("#movie-days").text(days);
         });
     });
 </script>
