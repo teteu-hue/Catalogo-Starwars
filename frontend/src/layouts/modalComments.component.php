@@ -7,7 +7,8 @@
             </div>
             <div class="modal-body">
                 <form class="form-group" action="http://localhost:8081/comments" method="POST">
-                    <input type="text" class="form-control" placeholder="Faça um comentário">
+                    <input type="hidden" id="episode_id" name="episode_id">
+                    <input type="text" name="comment" class="form-control" placeholder="Faça um comentário">
                     <button class="btn btn-primary mt-1">Enviar comentário</button>
                 </form>
             </div>
@@ -18,3 +19,12 @@
     </div>
 </div>
 </div>
+
+<script>
+    $(document).on('click', '#commentsBtn', function(){
+        const opening = $(this).data('episode-id');  
+        
+
+        $("#episode_id").val(opening);   
+    });
+</script>
