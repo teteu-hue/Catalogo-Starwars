@@ -2,12 +2,9 @@
 
 namespace App\Utils;
 
-use Error;
-use Exception;
-
 class Cache
 {
-    private static $cacheExpiration = 3600;
+    private static $cacheExpiration = 604800; //  1 week
     private static $basePath = __DIR__ . '/cache/';
 
     /**
