@@ -2,6 +2,7 @@
 
 namespace App\Resource;
 
+use App\Models\CharactersMovies;
 use App\Models\Movies;
 use App\Services\ApiStarwarsService;
 use App\Services\CharacterService;
@@ -41,6 +42,10 @@ class ApiStarWarsResource
             $body[$i]['film_age'] = self::calculateMovieAge($response['results'][$i]['release_date']);
             
             // Buscar um jeito de automatizar essa criacao dos resultados no banco de dados da aplicacao.
+            //foreach($response['results'][$i]['characters'] as $character)
+            //{
+            //    (new CharactersMovies)->create($i, basename($character));
+            //}
             //(new Movies)->create($body[$i]);
         }
 
