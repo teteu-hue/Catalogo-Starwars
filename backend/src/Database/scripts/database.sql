@@ -40,3 +40,5 @@ CREATE TABLE comments (
     FOREIGN KEY (episode_id) REFERENCES movies(id)
 );
 
+ALTER TABLE comments
+ADD COLUMN created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
