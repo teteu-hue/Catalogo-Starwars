@@ -130,6 +130,8 @@ class Dao
      * 
      * @param string $query -> querie a ser executada
      * @param array $params -> parâmetros que serão executados na querie
+     * 
+     * @return array;
      */
     protected function selectQuery($query, $params = null)
     {
@@ -154,6 +156,14 @@ class Dao
         return $this->validateQuery($result);
     }
 
+    /**
+     * método responsável por realizar queries select
+     * 
+     * @param string $query -> querie a ser executada
+     * @param array $params -> parâmetros que serão executados na querie
+     * 
+     * @return bool;
+     */
     protected function insertQuery($query, $params = null)
     {
         try {
