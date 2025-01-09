@@ -6,7 +6,7 @@ use Error;
 use PDO;
 use PDOException;
 
-class Dao
+class Dao // Data Access Object
 {
     /**
      * Classe responsável pela conexão e manipulação do banco de dados da aplicação.
