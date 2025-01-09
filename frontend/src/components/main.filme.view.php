@@ -20,6 +20,7 @@
 
 <?= include_once __DIR__ . "/../layouts/modalDetails.component.php" ?>
 <?= include_once __DIR__ . "/../layouts/modalComments.component.php" ?>
+<?= include_once __DIR__ . "/../layouts/modalCheckComents.component.php" ?>
 <?= include_once __DIR__  .  "/../scripts/getMovies.php" ?>
 
 

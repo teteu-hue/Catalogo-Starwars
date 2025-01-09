@@ -41,12 +41,25 @@
 
 
                     const card = `
-                <div class="card mx-auto d-flex m-5" style="width: 40rem;">
+                <div class="card mx-auto d-flex m-5" style="width: 50rem;">
                     <div class="card-body " style="background-color:#8C0B23;">
                         <h5 class="card-title text-white font-bold h1">${title}</h5>
                         <p class="card-text text-white">
                             ${opening_crawl}
                         </p>
+                        
+                        <a href="#" 
+                            id="commentsBtn"
+                            data-bs-toggle="modal"
+                            data-episode-id="${episode_id}"
+                            data-bs-target="#commentsModal" 
+                            class="btn btn-success text-white">Comente a respeito desse filme</a>
+                        <a href="#" 
+                            id="checkCommentsBtn"
+                            data-bs-toggle="modal"
+                            data-episode-id="${episode_id}"
+                            data-bs-target="#checkCommentsModal" 
+                            class="btn btn-dark text-white">Veja os comentários a respeito desse filme</a>
                         <a href="#" 
                             id="details-button"
                             data-title="${title}"
@@ -61,13 +74,8 @@
                             data-character="${characterList}"
                             data-bs-toggle="modal" 
                             data-bs-target="#exampleModal" 
-                            class="btn btn-primary text-white">Detalhes</a>
-                        <a href="#" 
-                            id="commentsBtn"
-                            data-bs-toggle="modal"
-                            data-episode-id="${episode_id}"
-                            data-bs-target="#commentsModal" 
-                            class="btn btn-success text-white">Comente a respeito desse filme</a>
+                            class="btn btn-primary text-white">Detalhes
+                        </a>
                     </div>
                 </div>`;
                     $('#movies-container').append(card);
