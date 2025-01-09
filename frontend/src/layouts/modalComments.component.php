@@ -24,7 +24,6 @@
     $(document).on('click', '#commentsBtn', function(){
         const opening = $(this).data('episode-id');  
         
-
         $("#episode_id").val(opening);   
     });
 </script>

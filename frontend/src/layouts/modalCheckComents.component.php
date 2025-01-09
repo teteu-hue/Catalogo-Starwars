@@ -6,7 +6,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-               <h1>Hello world!</h1>
+                <h1>Hello world!</h1>
+                <span id="episode_id"></span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar detalhes</button>
@@ -14,3 +15,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).on('click', '#checkCommentsBtn', function() {
+        const episode = $(this).data('episode-id');
+        console.log(episode);
+        $("#episode_id").html(episode);
+    })
+</script>
