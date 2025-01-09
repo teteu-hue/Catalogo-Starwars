@@ -76,9 +76,7 @@ class Router
                 "ip_address" => $ipAddress
             ];
 
-            (new RequestApiLogs)->registerLog($logs);
-
-            http_response_code($responseStatus);
+            (new RequestApiLogs)->registerLog($logs);        
 
         } else {
             $requestTime = date('Y-m-d H:i:s');
