@@ -6,9 +6,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form class="form-group" action="http://localhost:8081/comments" method="POST">
+                <form class="form-group" id="commentForm">
                     <input type="hidden" id="episode_id" name="episode_id">
-                    <input type="text" name="comment" class="form-control" placeholder="Faça um comentário">
+                    <input type="text" name="comment" id="comment" class="form-control" placeholder="Faça um comentário">
                     <button class="btn btn-primary mt-1">Enviar comentário</button>
                 </form>
             </div>
@@ -23,7 +23,32 @@
 <script>
     $(document).on('click', '#commentsBtn', function(){
         const opening = $(this).data('episode-id');  
-        
         $("#episode_id").val(opening);   
     });
+
+    $(document).on("submit", function(e){
+        e.preventDefault();
+
+        const episodeId = $("#episode_id").val();
+        const comment = $("#comment").val();
+        
+        $.ajax({
+            url: "http://localhost:8081/comments",
+            method: "POST",
+            data: {
+                episode_id: episodeId,
+                comment: comment
+            },
+            success: function(response){
+                if(response.status){
+                    alert("Comentario feito com sucesso!");
+                    $("#comment").val("");
+                }
+            },
+            error: function(xhr, status, error){
+                console.error("Error: ", status, error);
+            }
+        })
+    });
+
 </script>
