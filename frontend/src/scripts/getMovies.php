@@ -12,11 +12,10 @@
                 $(".c-loader").after(loadingText);
             },
             error: function(response) {
-                const loading = `<div class="c-loader m-auto mt-5 justify-content-center"></div>`;
-                const loadingText = `<h2 id="text-loader" class="text-center text-white mt-5 pt-5">Estamos carregando os filmes do catalogo</h2>`;
-
-                $("#movies-container").before(loading);
-                $(".c-loader").append(loadingText);
+                if(!(document.querySelector('.cloader') && document.querySelectorAll('#text-loader'))){
+                    $("#movies-container").before(loading);
+                    $(".c-loader").append(loadingText);  
+                }
             },
             success: function(response) {
 
