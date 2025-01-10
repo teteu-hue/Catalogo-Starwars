@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Database\Dao;
+use Error;
 use PDOException;
 
 class Comment extends Dao
@@ -19,4 +20,16 @@ class Comment extends Dao
             echo "Error: ". $e->getMessage();
         }
     }
+
+    public function create($data)
+    {
+        $sql = "INSERT INTO comments(episode_id, comment) VALUES(:episode_id, :comment);";
+
+        try {
+            return $this->insertQuery($sql, $data);
+        } catch(PDOException $e){  
+            return false;
+        }
+    }
 }
+

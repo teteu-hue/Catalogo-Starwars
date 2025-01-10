@@ -186,7 +186,7 @@ class Dao // Data Access Object
             }
             return false;   
         } catch(PDOException $e){
-            echo "Error: " . $e->getMessage();
+            error_log("Error: " . $e->getMessage());
         }
     }
 

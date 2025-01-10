@@ -24,10 +24,33 @@ class CommentController extends Controller
 
     public function store()
     {
-        $body = [
-            "episode_id" => $_POST['episode_id'],
-            "comment" => $_POST['comment']
+        /**
+         * (null && null) = false 
+         * (null && null) === false = true
+         */
+        if((isset($_POST['episode_id']) && isset($_POST['comment'])) === false){
+            return $this->sendResponse([
+                "error" => "Por favor, contate o suporte!"
+            ], 400);
+        }
+        $data = [
+            ":episode_id" => $_POST['episode_id'],
+            ":comment" => $_POST['comment'] 
         ];
-        
+        $response = (new Comment)->create($data);
+
+        if($response){
+            return $this->sendResponse([
+                "status" => true,
+                "message" => "Obrigado pelo comentário!"
+            ], 200);
+        }
+        return $this->sendResponse([
+            "status" => false,
+            "message" => "Por favor, contate o suporte!"
+        ], 500);
+
     }
 }
+
+
