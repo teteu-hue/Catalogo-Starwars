@@ -25,7 +25,7 @@ class Dao // Data Access Object
     public function __construct()
     {}
 
-    private function setFile($file = 'config.ini')
+    private function setFile($file = 'config.docker.ini')
     {
         $this->file = parse_ini_file($file);
 
