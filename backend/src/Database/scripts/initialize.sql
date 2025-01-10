@@ -1,5 +1,3 @@
-CREATE DATABASE starwars;
-
 CREATE TABLE api_logs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     request_time DATETIME NOT NULL,
