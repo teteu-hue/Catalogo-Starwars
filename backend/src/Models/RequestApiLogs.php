@@ -6,17 +6,33 @@ use App\Database\Dao;
 
 class RequestApiLogs extends Dao
 {
-    public function registerLog($params)
+    private $requestTime;
+    private string $endpoint;
+    private string $requestMethod;
+    private int $responseStatus;
+    private string $ipAddress;
+
+    public function __construct($requestTime, $endpoint, $requestMethod, $responseStatus, $ipAddress)
+    {
+        $this->requestTime = $requestTime;
+        $this->endpoint = $endpoint;
+        $this->requestMethod = $requestMethod;
+        $this->responseStatus = $responseStatus;
+        $this->ipAddress = $ipAddress;
+        $this->registerLog();
+    }
+
+    private function registerLog()
     {
         $sql = "INSERT INTO api_logs(request_time, endpoint, request_method, response_status, ip_address)
                 VALUES (:request_time, :endpoint, :request_method, :response_status, :ip_address)";
 
         $body = [
-            ":request_time" => $params["request_time"],
-            ":endpoint" => $params["endpoint"],
-            ":request_method" => $params["request_method"],
-            ":response_status" => $params["response_status"],
-            ":ip_address" => $params["ip_address"]
+            ":request_time" => $this->requestTime,
+            ":endpoint" => $this->endpoint,
+            ":request_method" => $this->requestMethod,
+            ":response_status" => $this->responseStatus,
+            ":ip_address" => $this->ipAddress
         ];
 
         $this->insertQuery($sql, $body);
