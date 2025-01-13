@@ -48,6 +48,7 @@ class Router
         $uri = strtok($_SERVER['REQUEST_URI'], '?');
         $method = $_SERVER['REQUEST_METHOD'];
         $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $requestTime = date('Y-m-d H:i:s');
 
         if(array_key_exists($uri, $this->routes[$method])){
             $controller = $this->routes[$method][$uri]['controller'];
@@ -57,7 +58,6 @@ class Router
                 echo "O $controller::$action nao existe";
             }            
 
-            $requestTime = date('Y-m-d H:i:s');
             $responseStatus = 200;
 
             try {
@@ -68,28 +68,12 @@ class Router
                 echo 'Error: ' . $e->getMessage();
             }
 
-            $logs = [
-                "request_time" => $requestTime,
-                "endpoint" => $uri,
-                "request_method" => $method,
-                "response_status" => $responseStatus,
-                "ip_address" => $ipAddress
-            ];
-
-            (new RequestApiLogs)->registerLog($logs);        
+            (new RequestApiLogs($requestTime, $uri, $method, $responseStatus, $ipAddress));        
 
         } else {
-            $requestTime = date('Y-m-d H:i:s');
             $responseStatus = 404;
-            $logs = [
-                "request_time" => $requestTime,
-                "endpoint" => $uri,
-                "request_method" => $method,
-                "response_status" => $responseStatus,
-                "ip_address" => $ipAddress
-            ];
 
-            (new RequestApiLogs)->registerLog($logs);
+            (new RequestApiLogs($requestTime, $uri, $method, $responseStatus, $ipAddress));
             http_response_code($responseStatus);
             throw new Exception("No route found for URI: $uri");
         }
