@@ -15,7 +15,12 @@ class Comment extends Dao
                 INNER JOIN movies ON movies.episode_id = comments.episode_id
                 WHERE movies.episode_id = '$id'";
         try {
-            return $this->selectQuery($sql);
+            $response = $this->selectQuery($sql);
+
+            if(!$response){
+                return false;
+            }
+            return $response;
         } catch(PDOException $e){
             echo "Error: ". $e->getMessage();
         }

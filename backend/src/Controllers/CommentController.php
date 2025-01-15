@@ -13,7 +13,13 @@ class CommentController extends Controller
         if(isset($_GET['id'])){
             if(filter_var($_GET['id'], FILTER_VALIDATE_INT)){
                 $id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
-                return $this->sendResponse((new Comment)->show($id));
+                $response = (new Comment)->show($id);
+
+                if(!$response){
+                    return $this->sendResponse(["error" => "Esse episodio nao existe!"], 404);
+                }
+
+                return $this->sendResponse($response);
             } else {
                 return $this->sendResponse(["error" => "Algo deu errado, por favor consulte o suporte!"], 404);
             }
