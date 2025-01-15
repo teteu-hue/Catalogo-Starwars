@@ -40,3 +40,12 @@ CREATE TABLE comments (
 
 ALTER TABLE comments
 ADD COLUMN created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+CREATE TABLE user(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(20) NOT NULL
+);
+
+INSERT INTO user(email, senha) 
+VALUES("admin@admin.com", "admin@admin");
