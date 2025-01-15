@@ -172,11 +172,9 @@ class Dao // Data Access Object
             if($params == null){
                 $stmt = $this->connection->prepare($query);
                 $success = $stmt->execute();
-                $result = $stmt;
             } else {
                 $stmt = $this->connection->prepare($query);
                 $success = $stmt->execute($params);
-                $result = $stmt;
             }
             
             $this->closeConnection();
