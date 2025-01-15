@@ -72,7 +72,7 @@ class Router
 
         } else {
             $responseStatus = 404;
-
+            echo "Verifique o se a rota e os métodos informados estão corretos está correta!";
             (new RequestApiLogs($requestTime, $uri, $method, $responseStatus, $ipAddress));
             http_response_code($responseStatus);
             throw new Exception("No route found for URI: $uri");

@@ -7,6 +7,17 @@ use PDOException;
 
 class User extends Dao
 {
+    public function show($email)
+    {
+        $sql = "SELECT * FROM user where email = '$email'";
+
+        try {
+            return $this->selectQuery($sql);
+        } catch (PDOException $e){
+            error_log($e);
+        }
+    }
+
     public function create($data)
     {
         $sql = "INSERT INTO user(email, senha)
@@ -39,5 +50,4 @@ class User extends Dao
         }
     }
 
-    
 }
