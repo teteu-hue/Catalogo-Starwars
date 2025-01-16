@@ -188,4 +188,28 @@ class Dao // Data Access Object
         }
     }
 
+    protected function updateQuery($query, $params = null)
+    {
+        try {
+            $this->getConnection();
+
+            if($params == null){
+                $stmt = $this->connection->prepare($query);
+                $success = $stmt->execute();
+            } else {
+                $stmt = $this->connection->prepare($query);
+                $success = $stmt->execute($params);
+            }
+            
+            $this->closeConnection();
+
+            if($success){
+                return true;
+            }
+            return false;   
+        } catch(PDOException $e){
+            error_log("Error: " . $e->getMessage());
+        }
+    }
+
 }
