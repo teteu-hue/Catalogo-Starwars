@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controller;
 use App\Services\AuthService;
+use App\Services\TokenService;
 
 class AuthController extends Controller
 {
@@ -26,9 +27,12 @@ class AuthController extends Controller
             return $this->sendResponse(["data" => "As credências informadas são inválidas!"], 400);
         }
 
+        $token = (new TokenService)->generateToken($user['id'], $user['email']);
+
         return $this->sendResponse(["data" => [
             "message" => "Login realizado com sucesso!",
-            "token" => "token gerado!"
+            "userId" => "token gerado!",
+            "token" => $token
         ]]);
     }
 }

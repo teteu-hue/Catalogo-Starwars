@@ -27,16 +27,15 @@ class Token extends Dao
         }
     }
 
-    public function insertToken(int $userId, string $token, string $expireAt)
+    public function insertToken(int $userId, string $token)
     {
-        $sql = "INSERT INTO token(user_id, token, expire_at) 
-                VALUES (:user_id, :token, :expire_at)";
+        $sql = "INSERT INTO token(user_id, token) 
+                VALUES (:user_id, :token)";
 
         try {  
             $token = $this->insertQuery($sql, [
                 ":user_id" => $userId,
-                ":token" => $token,
-                ":expire_at" => $expireAt
+                ":token" => $token
             ]);
 
             if(!$token){
