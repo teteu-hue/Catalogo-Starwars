@@ -20,9 +20,9 @@ class AuthController extends Controller
             return $this->sendResponse(["error" => "O email informado não é válido!"], 400);
         }
 
-        $response = (new AuthService)->validateUser($email, $senha);
+        $user = (new AuthService)->validateUser($email, $senha);
 
-        if (!$response) {
+        if (!$user) {
             return $this->sendResponse(["data" => "As credências informadas são inválidas!"], 400);
         }
 
