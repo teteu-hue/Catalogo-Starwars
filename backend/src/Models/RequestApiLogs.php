@@ -12,6 +12,9 @@ class RequestApiLogs extends Dao
     private int $responseStatus;
     private string $ipAddress;
 
+    // estudar o metodo __invoke ->
+    // metodo magicos __call, __toString, __construct, __destruct, __invoke
+
     public function __construct($requestTime, $endpoint, $requestMethod, $responseStatus, $ipAddress)
     {
         $this->requestTime = $requestTime;

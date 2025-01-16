@@ -12,11 +12,12 @@ class UserService
         try {
             $response = (new User)->show($email);
             if(!$response){
-                return false;
+                throw new Exception("User not found");
             }
             return $response;
         } catch(Exception $e){
             error_log("Error: " . $e->getMessage());
+            return false;
         }
     }
 }

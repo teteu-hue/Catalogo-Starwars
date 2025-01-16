@@ -6,14 +6,14 @@ class AuthService
 {
     public function validateUser($email, $senha)
     {
-        $response = (new UserService)->getUser($email);
-        $validatedPassword = $this->validatePassword($senha, $response['senha']);
+        $user = (new UserService)->getUser($email);
+        $validatedPassword = $this->validatePassword($senha, $user['senha']);
         
         if($validatedPassword !== 0){
             return false;
         }
 
-        return $response;
+        return $user;
     }
 
     private function validatePassword(string $inputPassword, string $storedPassword)
