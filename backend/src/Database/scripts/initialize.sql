@@ -49,3 +49,13 @@ CREATE TABLE user(
 
 INSERT INTO user(email, senha) 
 VALUES("admin@admin.com", "admin@admin");
+
+CREATE TABLE token(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expire_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    revoked TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);
