@@ -59,3 +59,18 @@ CREATE TABLE token(
     revoked TINYINT(1) DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
+
+-- TRIGGER
+DELIMITER $$
+
+CREATE TRIGGER set_expire_at
+BEFORE INSERT ON token
+FOR EACH ROW
+BEGIN
+    IF NEW.expire_at IS NULL THEN
+        SET NEW.expire_at = DATE_ADD(NOW(), INTERVAL 1 MONTH);
+    END IF;
+END$$
+
+DELIMITER ;
+
