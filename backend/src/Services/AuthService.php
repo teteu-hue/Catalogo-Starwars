@@ -7,6 +7,11 @@ class AuthService
     public function validateUser($email, $senha)
     {
         $user = (new UserService)->getUser($email);
+
+        if(!$user){
+            return false;
+        }
+
         $validatedPassword = $this->validatePassword($senha, $user['senha']);
         
         if($validatedPassword !== 0){
