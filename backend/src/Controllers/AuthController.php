@@ -18,7 +18,7 @@ class AuthController extends Controller
         $senha = $_POST['senha'];
 
         if (!(filter_var($email, FILTER_VALIDATE_EMAIL) && (strlen($email) >= 15 && strlen($email) <= 100))) {
-            return $this->sendResponse(["error" => "O email informado não é válido!"], 400);
+            return $this->sendResponse(["data" => "O email informado não é válido!"], 400);
         }
 
         $user = (new AuthService)->validateUser($email, $senha);
@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         return $this->sendResponse(["data" => [
             "message" => "Login realizado com sucesso!",
-            "userId" => "token gerado!",
+            "userId" => $user['id'],
             "token" => $token
         ]]);
     }
