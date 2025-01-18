@@ -39,12 +39,10 @@ if(isset($_SESSION['userId'])){
                 senha: password
             },
             error: (err) => {
-                console.log(err.responseJSON.data);
                 $("#error-submit").text(err.responseJSON.data);
             },
             success: (response) => {
                 const {userId, token} = response.data;
-                console.log(userId, token);
 
                 $.ajax({
                     url: "./functions/session_handler.php",
