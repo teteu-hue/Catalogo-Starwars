@@ -1,4 +1,8 @@
-<?php include_once __DIR__ . "/static/header.php"; ?>
+<?php include_once __DIR__ . "/static/header.php"; 
+if(isset($_SESSION['userId'])){
+    header('Location: home.view.php');
+}
+?>
 
 <main class="d-flex justify-content-center py-4 mt-5 form-signin w-full">
   <form id="login-form">
@@ -37,10 +41,29 @@
             error: (err) => {
                 console.log(err.responseJSON.data);
                 $("#error-submit").text(err.responseJSON.data);
-            }
-        });
+            },
+            success: (response) => {
+                const {userId, token} = response.data;
+                console.log(userId, token);
 
-        console.log(email, password);
+                $.ajax({
+                    url: "./functions/session_handler.php",
+                    type: "POST",
+                    data: {
+                        userId: userId,
+                        token: token
+                    },
+                    success: (response) => {
+                        if(response.message != "success"){
+                            alert("Erro ao salvar");
+                        }
+                        alert("Sucesso ao gravar sessao!");
+                        window.location.href = "home.view.php";
+                    }
+                });
+            }
+            
+        });
     });
 
 </script>

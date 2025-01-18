@@ -11,4 +11,6 @@
     <script src="../../frontend/config/config.js"></script>
 </head>
 <body class="bg-black">
-<?php include_once(__DIR__ . "/../layouts/navbar.component.php");?>
+<?php include_once(__DIR__ . "/../layouts/navbar.component.php");
+session_start();
+?>
